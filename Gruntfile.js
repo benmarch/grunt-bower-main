@@ -33,20 +33,20 @@ module.exports = function (grunt) {
 
         // Before generating any new files, remove any previously-created files.
         clean: {
-            tests: ['tmp']
+            tests: ['copyTmp', 'pruneTmp']
         },
 
         // Configuration to be run (and then tested).
         bower_main: {
-            /*copy: {
+            copy: {
                 options: {
-                    dest: 'tmp'
+                    dest: 'copyTmp'
                 }
-            },*/
+            },
             prune: {
                 options: {
                     method: 'prune',
-                    tmpDir: 'tmp'
+                    tmpDir: 'pruneTmp'
                 }
             }
         },

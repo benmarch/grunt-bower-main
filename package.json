@@ -5,9 +5,7 @@
   "homepage": "https://github.com/benmarch/grunt-bower-main",
   "repository": "https://github.com/benmarch/grunt-bower-main.git",
   "author": {
-    "name": "Ben March",
-    "email": "",
-    "url": ""
+    "name": "Ben March"
   },
   "keywords": [
     "gruntplugin"

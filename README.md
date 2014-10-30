@@ -1,6 +1,6 @@
 # grunt-bower-main
 
-> Adds only the main files from Bower components to source code.
+> Adds only the main files from Bower components to source code. Integrates seamlessly with grunt-wiredep.
 
 ## Getting Started
 This plugin requires Grunt.
@@ -25,60 +25,85 @@ In your project's Gruntfile, add a section named `bower_main` to the data object
 ```js
 grunt.initConfig({
   bower_main: {
-    options: {
-      // Task-specific options go here.
-    },
-    your_target: {
-      // Target-specific file lists and/or options go here.
-    },
-  },
+    copy: {
+      options: {
+        dest: 'src/resources/bower_components'
+      }
+    }
+  }
 })
 ```
 
 ### Options
 
-#### options.separator
+#### options.method
 Type: `String`
-Default value: `',  '`
+Default value: `'copy'`
 
-A string value that is used to do something with whatever.
+Dictates whether the main files will be copied to a destination directory ('copy'), or if other files will be removed from the
+bower_components directory ('prune').
 
-#### options.punctuation
+The default location for the bower_components directory is the top level directory. Setting method to 'copy' will
+allow you to keep the bower_components directory and copy the main files into your source code. This is useful if you
+are not using a static frontend stack (like a Java webapp for example). If you don't care about keeping the original
+component files then you can set your bower_components directory to live directly in the source code and prune away
+unnecessary files. This method keeps the 'bower.json' and '.bower.json' files also so that `bower install` does not 
+reinstall them every time.
+
+#### options.dest
 Type: `String`
-Default value: `'.'`
+Default value: null
 
-A string value that is used to do something else with whatever else.
+This must be set if using method: 'copy', will be the top-level destination directory of the main files.
+
+#### options.tmpDir
+Type: `String`
+Default value: '.tmp'
+
+This is used with method: 'prune'. The plugin copies main files here, deletes the bower_components directory, and renames
+this directory to 'bower_components' (or whatever the original bower components directory was named.) Change this if you
+are using '.tmp' for any other plugin.
+
+#### options.bowerrc
+Type: `String`
+Default value: '.bowerrc'
+
+Points to your .bowerrc file if you have one.
 
 ### Usage Examples
+This task is generally used in tandem with [grunt-wiredep](https://github.com/stephenplusplus/grunt-wiredep). Run this 
+task first, and then configure wiredep as you normally would. This is possible because the directory structure of the 
+output of this task is identical to the original. The motivation to create this task comes from working in a Java house
+and we wanted to pull the bower_components out of the artifact, but still be able to use wiredep.
 
 #### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
+To get started quickly, just set a 'dest' directory:
 
 ```js
 grunt.initConfig({
   bower_main: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
+    copy: {
+      options: {
+        dest: 'src/resources/bower_components'
+      }
+    }  
+  }
 })
 ```
 
 #### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
+If you want to prune instead, just tell it to prune and change the temp directory if necessary:
 
 ```js
 grunt.initConfig({
   bower_main: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
+    prune: {
+      options: {
+        method: 'prune',
+        tmpDir: 'pruneTmp'
+      }
+    }  
+  }
 })
 ```
 
@@ -86,7 +111,7 @@ grunt.initConfig({
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-_(Nothing yet)_
+0.1.0 - Initial release
 
 ## License
 Copyright (c) 2014 Ben March. Licensed under the MIT license.
