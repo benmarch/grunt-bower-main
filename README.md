@@ -76,7 +76,7 @@ task first, and then configure wiredep as you normally would. This is possible b
 output of this task is identical to the original. The motivation to create this task comes from working in a Java house
 and we wanted to pull the bower_components out of the artifact, but still be able to use wiredep.
 
-#### Default Options
+#### Copy
 To get started quickly, just set a 'dest' directory:
 
 ```js
@@ -91,7 +91,7 @@ grunt.initConfig({
 })
 ```
 
-#### Custom Options
+#### Prune
 If you want to prune instead, just tell it to prune and change the temp directory if necessary:
 
 ```js
