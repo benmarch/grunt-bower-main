@@ -1,31 +1,32 @@
 {
-    "name": "grunt-bower-main",
-    "version": "0.0.1",
-    "description": "Adds only the main files from Bower components to source code.",
-    "homepage": "https://github.com/benmarch/grunt-bower-main",
-    "repository": "https://github.com/benmarch/grunt-bower-main.git",
-    "author": {
-        "name": "Ben March",
-        "email": "",
-        "url": ""
-    },
-    "keywords": [
-        "gruntplugin"
-    ],
-    "main": "Gruntfile.js",
-    "engines": {
-        "node": ">= 0.8.0"
-    },
-    "license": "MIT",
-    "devDependencies": {
-        "grunt-contrib-clean": "~0.5.0",
-        "grunt-contrib-jshint": "~0.8.0",
-        "grunt-contrib-nodeunit": "~0.3.0",
-        "grunt": "~0.4.2",
-        "jshint-stylish": "~0.1.5",
-        "load-grunt-tasks": "~0.3.0"
-    },
-    "scripts": {
-        "test": "grunt test"
-    }
+  "name": "grunt-bower-main",
+  "version": "0.0.1",
+  "description": "Adds only the main files from Bower components to source code.",
+  "homepage": "https://github.com/benmarch/grunt-bower-main",
+  "repository": "https://github.com/benmarch/grunt-bower-main.git",
+  "author": {
+    "name": "Ben March",
+    "email": "",
+    "url": ""
+  },
+  "keywords": [
+    "gruntplugin"
+  ],
+  "main": "Gruntfile.js",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-bower-install-simple": "^1.0.3",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-jshint": "~0.8.0",
+    "grunt-contrib-nodeunit": "~0.3.0",
+    "jshint-stylish": "~0.1.5",
+    "load-grunt-tasks": "~0.3.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  }
 }

@@ -8,6 +8,9 @@
 
 'use strict';
 
+var path = require('path'),
+    fs = require('fs');
+
 module.exports = function (grunt) {
 
     // Please see the Grunt documentation for more information regarding task
@@ -16,32 +19,51 @@ module.exports = function (grunt) {
     grunt.registerMultiTask('bower_main', 'Adds only the main files from Bower components to source code.', function () {
 
         // Merge task-specific and/or target-specific options with these defaults.
-        var options = this.options();
+        var done = this.async(),
+            options = this.options({
+                bowerrc: '.bowerrc'
+            }),
+            bowerrc = grunt.file.exists(options.bowerrc) ? grunt.file.readJSON(options.bowerrc) : null,
+            bowerDir = path.resolve(options.bowerDir || (bowerrc && bowerrc.directory ? bowerrc.directory : 'bower_components')),
+            mainFiles = [];
 
-        // Iterate over all specified file groups.
-        this.files.forEach(function (file) {
-            // Concat specified files.
-            var src = file.src.filter(function (filepath) {
-                // Warn on and remove invalid source files (if nonull was set).
-                if (!grunt.file.exists(filepath)) {
-                    grunt.log.warn('Source file "' + filepath + '" not found.');
-                    return false;
-                } else {
-                    return true;
+        if (!options.dest || options.remove) {
+            grunt.fatal("No operation specified.");
+        }
+
+        fs.readdir(bowerDir, function (err, files) {
+            if (err) {
+                grunt.fatal('Could not read from bower directory: ' + bowerDir);
+            }
+
+            files.forEach(function (file) {
+                if (fs.statSync(path.join(bowerDir, file)).isDirectory()) {
+                    var bowerJsonFile = path.join(bowerDir, file, 'bower.json'),
+                        main;
+
+                    if (fs.existsSync(bowerJsonFile)) {
+                        main = grunt.file.readJSON(bowerJsonFile).main;
+
+                        if (main) {
+                            if (main.forEach) {
+                                main.forEach(function (mainFile) {
+                                    mainFiles.push(path.join(bowerDir, file, mainFile));
+                                });
+                            }
+                            else {
+                                mainFiles.push(path.join(bowerDir, file, main));
+                            }
+                        }
+                    }
                 }
-            }).map(function (filepath) {
-                // Read file source.
-                return grunt.file.read(filepath);
-            }).join(grunt.util.normalizelf(options.separator));
+            });
 
-            // Handle options.
-            src += options.punctuation;
+            mainFiles.forEach(function (mainFile) {
+                var dest = path.join(options.dest, mainFile.replace(bowerDir, ''));
+                grunt.file.copy(mainFile, dest);
+            });
 
-            // Write the destination file.
-            grunt.file.write(file.dest, src);
-
-            // Print a success message.
-            grunt.log.writeln('File "' + file.dest + '" created.');
+            done();
         });
     });
 

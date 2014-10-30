@@ -1,0 +1,20 @@
+{
+  "name": "grunt-bower-main",
+  "version": "0.0.1",
+  "homepage": "https://github.com/benmarch/grunt-bower-main",
+  "authors": [
+    "benmarch <bmarch89@gmail.com>"
+  ],
+  "description": "Adds only the main files from Bower components to source code.",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "bootstrap": "~3.3.0"
+  }
+}

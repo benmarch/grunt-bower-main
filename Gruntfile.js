@@ -14,6 +14,11 @@ module.exports = function (grunt) {
 
     // Project configuration.
     grunt.initConfig({
+
+        'bower-install-simple': {
+            bower: {}
+        },
+
         jshint: {
             all: [
                 'Gruntfile.js',
@@ -34,11 +39,10 @@ module.exports = function (grunt) {
         // Configuration to be run (and then tested).
         bower_main: {
             default_options: {
-                options: {},
-                files: {
-                    'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123']
+                options: {
+                    dest: 'tmp'
                 }
-            },
+            }/*,
             custom_options: {
                 options: {
                     separator: ': ',
@@ -47,7 +51,7 @@ module.exports = function (grunt) {
                 files: {
                     'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123']
                 }
-            }
+            }*/
         },
 
         // Unit tests.
@@ -62,7 +66,7 @@ module.exports = function (grunt) {
 
     // Whenever the "test" task is run, first clean the "tmp" dir, then run this
     // plugin's task(s), then test the result.
-    grunt.registerTask('test', ['clean', 'bower_main', 'nodeunit']);
+    grunt.registerTask('test', ['clean', 'bower-install-simple', 'bower_main', 'nodeunit']);
 
     // By default, lint and run all tests.
     grunt.registerTask('default', ['jshint', 'test']);
