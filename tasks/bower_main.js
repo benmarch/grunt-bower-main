@@ -19,52 +19,66 @@ module.exports = function (grunt) {
     grunt.registerMultiTask('bower_main', 'Adds only the main files from Bower components to source code.', function () {
 
         // Merge task-specific and/or target-specific options with these defaults.
-        var done = this.async(),
-            options = this.options({
-                bowerrc: '.bowerrc'
+        var options = this.options({
+                method: 'copy', //can be 'copy' or 'prune'
+                bowerrc: '.bowerrc',
+                tmpDir: '.tmp'
             }),
             bowerrc = grunt.file.exists(options.bowerrc) ? grunt.file.readJSON(options.bowerrc) : null,
             bowerDir = path.resolve(options.bowerDir || (bowerrc && bowerrc.directory ? bowerrc.directory : 'bower_components')),
-            mainFiles = [];
+            mainFiles = [],
+            prune = options.method === 'prune';
 
-        if (!options.dest || options.remove) {
-            grunt.fatal("No operation specified.");
+        function addToMainList(mainFilePath) {
+            mainFiles.push(mainFilePath);
+            grunt.verbose.writeln('Added ' + mainFilePath + ' to main file list.');
         }
 
-        fs.readdir(bowerDir, function (err, files) {
-            if (err) {
-                grunt.fatal('Could not read from bower directory: ' + bowerDir);
-            }
+        if (options.method === 'copy' && !options.dest) {
+            grunt.fatal("No destination specified.");
+        }
 
-            files.forEach(function (file) {
-                if (fs.statSync(path.join(bowerDir, file)).isDirectory()) {
-                    var bowerJsonFile = path.join(bowerDir, file, 'bower.json'),
-                        main;
+        if (prune) {
+            options.dest = options.tmpDir;
+        }
 
-                    if (fs.existsSync(bowerJsonFile)) {
-                        main = grunt.file.readJSON(bowerJsonFile).main;
+        //find all the bower.json files and list the main files
+        grunt.file.recurse(bowerDir, function (abspath, rootdir, subdir, filename) {
+            var main;
 
-                        if (main) {
-                            if (main.forEach) {
-                                main.forEach(function (mainFile) {
-                                    mainFiles.push(path.join(bowerDir, file, mainFile));
-                                });
-                            }
-                            else {
-                                mainFiles.push(path.join(bowerDir, file, main));
-                            }
-                        }
+            if (filename === 'bower.json') {
+                grunt.verbose.writeln('Found bower.json in ' + subdir);
+                main = grunt.file.readJSON(abspath).main;
+
+                if (main) {
+                    if (main.forEach) {
+                        main.forEach(function (mainFile) {
+                            addToMainList(path.join(rootdir, subdir, mainFile));
+                        });
+                    }
+                    else {
+                        addToMainList(path.join(rootdir, subdir, main));
                     }
                 }
-            });
+            }
 
-            mainFiles.forEach(function (mainFile) {
-                var dest = path.join(options.dest, mainFile.replace(bowerDir, ''));
-                grunt.file.copy(mainFile, dest);
-            });
-
-            done();
+            if (prune && (filename === 'bower.json' || filename === '.bower.json')) {
+                addToMainList(abspath);
+            }
         });
+
+        //copy the main files to destination
+        mainFiles.forEach(function (mainFile) {
+            var dest = path.resolve(path.join(options.dest, mainFile.replace(bowerDir, '')));
+            grunt.file.copy(mainFile, dest);
+            grunt.log.ok("Copied " + mainFile + " -> " + dest);
+        });
+
+        if (prune) {
+            grunt.verbose.writeln('Pruning bower components directory.');
+            grunt.file.delete(bowerDir);
+            fs.rename(options.tmpDir, bowerDir);
+        }
     });
 
 };

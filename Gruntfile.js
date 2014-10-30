@@ -38,20 +38,17 @@ module.exports = function (grunt) {
 
         // Configuration to be run (and then tested).
         bower_main: {
-            default_options: {
+            /*copy: {
                 options: {
                     dest: 'tmp'
                 }
-            }/*,
-            custom_options: {
+            },*/
+            prune: {
                 options: {
-                    separator: ': ',
-                    punctuation: ' !!!'
-                },
-                files: {
-                    'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123']
+                    method: 'prune',
+                    tmpDir: 'tmp'
                 }
-            }*/
+            }
         },
 
         // Unit tests.
