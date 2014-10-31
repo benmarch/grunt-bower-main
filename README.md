@@ -1,4 +1,4 @@
-<img scr="https://travis-ci.org/benmarch/grunt-bower-main.svg?branch=master" />
+[![Build Status](https://travis-ci.org/benmarch/grunt-bower-main.svg?branch=master)](https://travis-ci.org/benmarch/grunt-bower-main)
 
 # grunt-bower-main
 
