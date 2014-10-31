@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/benmarch/grunt-bower-main.svg?branch=master)](https://travis-ci.org/benmarch/grunt-bower-main)
+[![devDependency Status](https://david-dm.org/benmarch/grunt-bower-main/dev-status.svg)](https://david-dm.org/benmarch/grunt-bower-main#info=devDependencies)
 
 # grunt-bower-main
 
