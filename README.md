@@ -1,3 +1,5 @@
+<img scr="https://travis-ci.org/benmarch/grunt-bower-main.svg?branch=master" />
+
 # grunt-bower-main
 
 > Adds only the main files from Bower components to source code. Integrates seamlessly with grunt-wiredep.
