@@ -25,7 +25,7 @@ module.exports = function (grunt) {
                 tmpDir: '.tmp'
             }),
             bowerrc = grunt.file.exists(options.bowerrc) ? grunt.file.readJSON(options.bowerrc) : null,
-            bowerDir = path.resolve(options.bowerDir || (bowerrc && bowerrc.directory ? bowerrc.directory : 'bower_components')),
+            bowerDir = path.resolve(options.bowerDir || (bowerrc && bowerrc.directory ? bowerrc.directory : 'bower_components')).replace(/\\/g, '/'),
             mainFiles = [],
             prune = options.method === 'prune';
 
