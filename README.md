@@ -115,6 +115,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 0.1.0 - Initial release
+0.1.1 - Globular Cluster - added support for globbing patterns in main definitions.
 
 ## License
 Copyright (c) 2014 Ben March. Licensed under the MIT license.
