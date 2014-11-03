@@ -8,7 +8,10 @@
     "name": "Ben March"
   },
   "keywords": [
-    "gruntplugin bower wiredep"
+    "gruntplugin",
+    "grunt",
+    "bower",
+    "wiredep"
   ],
   "main": "Gruntfile.js",
   "engines": {
