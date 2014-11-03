@@ -30,7 +30,8 @@ module.exports = function (grunt) {
             prune = options.method === 'prune';
 
         function addToMainList(mainFilePath) {
-            mainFiles.push(mainFilePath);
+            var file = grunt.file.expand(mainFilePath);
+            mainFiles = mainFiles.concat(file);
             grunt.verbose.writeln('Added ' + mainFilePath + ' to main file list.');
         }
 

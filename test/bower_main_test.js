@@ -28,18 +28,20 @@ exports.bower_main = {
         done();
     },
     copy: function (test) {
-        test.expect(2);
+        test.expect(3);
 
         test.ok(grunt.file.exists('copyTmp/jquery/dist/jquery.js'), 'the jquery.js dep should be present.');
         test.ok(!grunt.file.exists('copyTmp/jquery/src'), 'the jquery source code should not be present.');
+        test.ok(grunt.file.exists('copyTmp/fontawesome/fonts/FontAwesome.otf'), 'should expand globbing patterns.');
 
         test.done();
     },
     prune: function (test) {
-        test.expect(2);
+        test.expect(3);
 
         test.ok(grunt.file.exists('bower_components/jquery/dist/jquery.js'), 'the jquery.js dep should be present.');
         test.ok(!grunt.file.exists('bower_components/jquery/src'), 'the jquery source code should not be present.');
+        test.ok(grunt.file.exists('copyTmp/fontawesome/fonts/FontAwesome.otf'), 'should expand globbing patterns.');
 
         test.done();
     }
