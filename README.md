@@ -114,9 +114,10 @@ grunt.initConfig({
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-0.1.0 - Initial release
-0.1.1 - Globular Cluster - added support for globbing patterns in main definitions.
-0.1.2 - Broken Window - fixed bug in windows that prevented files from being copied.
+0.1.0 - Initial release 
+0.1.1 - Globular Cluster - added support for globbing patterns in main definitions. 
+0.1.2 - Broken Window - fixed bug in windows that prevented files from being copied. 
+0.1.3 - Kwirky Keywords - fixed NPM keywords so that we show up on Grunt/Plugins page.
 
 ## License
 Copyright (c) 2014 Ben March. Licensed under the MIT license.
