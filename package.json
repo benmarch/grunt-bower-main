@@ -1,6 +1,6 @@
 {
   "name": "grunt-bower-main",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Adds only the main files from Bower components to source code.",
   "homepage": "https://github.com/benmarch/grunt-bower-main",
   "repository": "https://github.com/benmarch/grunt-bower-main.git",

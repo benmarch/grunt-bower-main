@@ -47,7 +47,7 @@ module.exports = function (grunt) {
         grunt.file.recurse(bowerDir, function (abspath, rootdir, subdir, filename) {
             var main;
 
-            if (filename === 'bower.json') {
+            if (filename === 'bower.json' || filename === '.bower.json') {
                 grunt.verbose.writeln('Found bower.json in ' + subdir);
                 main = grunt.file.readJSON(abspath).main;
 
