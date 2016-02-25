@@ -22,12 +22,14 @@ module.exports = function (grunt) {
         var options = this.options({
                 method: 'copy', //can be 'copy' or 'prune'
                 bowerrc: '.bowerrc',
-                tmpDir: '.tmp'
+                tmpDir: '.tmp',
+                bowerFile: './bower.json'
             }),
             bowerrc = grunt.file.exists(options.bowerrc) ? grunt.file.readJSON(options.bowerrc) : null,
             bowerDir = path.resolve(options.bowerDir || (bowerrc && bowerrc.directory ? bowerrc.directory : 'bower_components')).replace(/\\/g, '/'),
             mainFiles = [],
-            prune = options.method === 'prune';
+            prune = options.method === 'prune',
+            bowerFile = grunt.file.exists(options.bowerFile) ? grunt.file.readJSON(options.bowerFile) : null;
 
         function addToMainList(mainFilePath) {
             var file = grunt.file.expand(mainFilePath);
@@ -49,7 +51,13 @@ module.exports = function (grunt) {
 
             if (filename === 'bower.json' || filename === '.bower.json') {
                 grunt.verbose.writeln('Found bower.json in ' + subdir);
-                main = grunt.file.readJSON(abspath).main;
+
+                if (bowerFile && bowerFile.overrides && bowerFile.overrides[subdir] && bowerFile.overrides[subdir].main) {
+                    grunt.verbose.writeln('Found override for: ' + subdir);
+                    main = bowerFile.overrides[subdir].main;
+                } else {
+                    main = grunt.file.readJSON(abspath).main;
+                }
 
                 if (main) {
                     if (main.forEach) {

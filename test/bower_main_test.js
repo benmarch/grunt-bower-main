@@ -28,8 +28,10 @@ exports.bower_main = {
         done();
     },
     copy: function (test) {
-        test.expect(3);
+        test.expect(5);
 
+        test.ok(grunt.file.exists('copyTmp/bootstrap/dist/js/bootstrap.js'), 'bootstrap.js should be present.');
+        test.ok(!grunt.file.exists('copyTmp/bootstrap/less/bootstrap.less'), 'bootstrap.less should not be present.');
         test.ok(grunt.file.exists('copyTmp/jquery/dist/jquery.js'), 'the jquery.js dep should be present.');
         test.ok(!grunt.file.exists('copyTmp/jquery/src'), 'the jquery source code should not be present.');
         test.ok(grunt.file.exists('copyTmp/fontawesome/fonts/FontAwesome.otf'), 'should expand globbing patterns.');
