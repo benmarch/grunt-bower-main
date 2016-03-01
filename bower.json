@@ -17,5 +17,12 @@
   "devDependencies": {
     "bootstrap": "~3.3.0",
     "fontawesome": "~4.2.0"
+  },
+  "overrides": {
+    "bootstrap": {
+      "main": [
+          "dist/js/bootstrap.js"
+      ]
+    }
   }
 }
