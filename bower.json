@@ -1,6 +1,6 @@
 {
   "name": "grunt-bower-main",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "homepage": "https://github.com/benmarch/grunt-bower-main",
   "authors": [
     "benmarch <bmarch89@gmail.com>"
@@ -21,7 +21,7 @@
   "overrides": {
     "bootstrap": {
       "main": [
-          "dist/js/bootstrap.js"
+        "dist/js/bootstrap.js"
       ]
     }
   }
