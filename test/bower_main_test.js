@@ -39,11 +39,12 @@ exports.bower_main = {
         test.done();
     },
     prune: function (test) {
-        test.expect(3);
+        test.expect(4);
 
         test.ok(grunt.file.exists('bower_components/jquery/dist/jquery.js'), 'the jquery.js dep should be present.');
         test.ok(!grunt.file.exists('bower_components/jquery/src'), 'the jquery source code should not be present.');
-        test.ok(grunt.file.exists('copyTmp/fontawesome/fonts/FontAwesome.otf'), 'should expand globbing patterns.');
+        test.ok(!grunt.file.exists('bower_components/fontawesome/css/font-awesome.css'), 'font-awesome.css should not be present.');
+        test.ok(grunt.file.exists('bower_components/fontawesome/fonts/FontAwesome.otf'), 'should expand globbing patterns.');
 
         test.done();
     }

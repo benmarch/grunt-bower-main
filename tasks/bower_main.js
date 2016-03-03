@@ -11,6 +11,23 @@
 var path = require('path'),
     fs = require('fs');
 
+function simpleExtend(destination, source) {
+    if (!destination) {
+        return source;
+    }
+    if (!source) {
+        return destination;
+    }
+
+    for (var key in source) {
+        if (source.hasOwnProperty(key)) {
+            destination[key] = source[key];
+        }
+    }
+
+    return destination;
+ }
+
 module.exports = function (grunt) {
 
     // Please see the Grunt documentation for more information regarding task
@@ -29,12 +46,18 @@ module.exports = function (grunt) {
             bowerDir = path.resolve(options.bowerDir || (bowerrc && bowerrc.directory ? bowerrc.directory : 'bower_components')).replace(/\\/g, '/'),
             mainFiles = [],
             prune = options.method === 'prune',
-            bowerFile = grunt.file.exists(options.bowerFile) ? grunt.file.readJSON(options.bowerFile) : null;
+            bowerFile = grunt.file.exists(options.bowerFile) ? grunt.file.readJSON(options.bowerFile) : null,
+            overrides = simpleExtend(options.overrides, bowerFile ? bowerFile.overrides : null);
 
         function addToMainList(mainFilePath) {
-            var file = grunt.file.expand(mainFilePath);
-            mainFiles = mainFiles.concat(file);
-            grunt.verbose.writeln('Added ' + mainFilePath + ' to main file list.');
+            var files = grunt.file.expand(mainFilePath);
+
+            files.forEach(function (file) {
+                if (!~mainFiles.indexOf(file)) {
+                    mainFiles.push(file);
+                }
+                grunt.verbose.writeln('Added ' + mainFilePath + ' to main file list.');
+            });
         }
 
         if (options.method === 'copy' && !options.dest) {
@@ -52,13 +75,15 @@ module.exports = function (grunt) {
             if (filename === 'bower.json' || filename === '.bower.json') {
                 grunt.verbose.writeln('Found bower.json in ' + subdir);
 
-                if (bowerFile && bowerFile.overrides && bowerFile.overrides[subdir] && bowerFile.overrides[subdir].main) {
+                //check for main files overrides
+                if (overrides && overrides[subdir] && overrides[subdir].main) {
                     grunt.verbose.writeln('Found override for: ' + subdir);
-                    main = bowerFile.overrides[subdir].main;
+                    main = overrides[subdir].main;
                 } else {
                     main = grunt.file.readJSON(abspath).main;
                 }
 
+                //if we have a main files
                 if (main) {
                     if (main.forEach) {
                         main.forEach(function (mainFile) {

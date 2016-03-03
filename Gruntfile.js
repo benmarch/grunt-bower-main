@@ -46,7 +46,14 @@ module.exports = function (grunt) {
             prune: {
                 options: {
                     method: 'prune',
-                    tmpDir: 'pruneTmp'
+                    tmpDir: 'pruneTmp',
+                    overrides: {
+                        fontawesome: {
+                            main:  [
+                                './fonts/*'
+                            ]
+                        }
+                    }
                 }
             }
         },
@@ -54,6 +61,15 @@ module.exports = function (grunt) {
         // Unit tests.
         nodeunit: {
             tests: ['test/*_test.js']
+        },
+
+        release: {
+            options: {
+                additionalFiles: ['bower.json'],
+                indentation: '    ',
+                commitMessage: 'Bumped version to <%= version %>',
+                tagMessage: 'Committing release tag <%= version %>'
+            }
         }
 
     });

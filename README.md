@@ -73,6 +73,23 @@ Default value: '.bowerrc'
 
 Points to your .bowerrc file if you have one.
 
+#### options.overrides
+Type: `Object`
+Default value: `undefined`
+
+Specify main file overrides. This can also be set in your project's bower.json in the same format, but options take precedent:
+
+```js
+overrides: {
+    fontawesome: {
+        main: './css/font-awesome.css' //exclude fonts
+    },
+    bootstrap: {
+        main: ['dist/js/bootstrap.js'] //exclude styles
+    }
+}
+```
+
 ### Usage Examples
 This task is generally used in tandem with [grunt-wiredep](https://github.com/stephenplusplus/grunt-wiredep). Run this 
 task first, and then configure wiredep as you normally would. This is possible because the directory structure of the 
@@ -114,6 +131,7 @@ grunt.initConfig({
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+- 0.2.0 - Overruled - ability to override main files, and fixed double-copy bug
 - 0.1.4 - The Singularity - Added support for ".bower.json"
 - 0.1.3 - Kwirky Keywords - fixed NPM keywords so that we show up on Grunt/Plugins page.
 - 0.1.2 - Broken Window - fixed bug in windows that prevented files from being copied.
